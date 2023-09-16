@@ -6,7 +6,7 @@
 /*   By: aaires-b <aaires-b@@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 16:48:51 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/09/13 19:33:50 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/09/16 20:13:11 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,16 @@
 int	ft_linesize(char *s)
 {
 	int	i;
-	
+
 	i = 0;
-	if(!s)
-		return(0);
+	if (!s)
+		return (0);
 	while (s[i] && s[i] != '\n')
 		i++;
 	if (s[i] == '\n' )
 		i++;
-	return(i);
+	return (i);
 }
-
 
 char	*ft_create(char *s1, char *s2)
 {
@@ -33,7 +32,7 @@ char	*ft_create(char *s1, char *s2)
 	int		i;
 	int		j;
 
-	newstr = (char *)malloc(sizeof(char) * (ft_linesize(s1) + ft_linesize(s2) + 1));
+	newstr = (char *)malloc((ft_linesize(s1) + ft_linesize(s2) + 1));
 	if (!newstr)
 		return (NULL);
 	i = 0;
@@ -46,7 +45,7 @@ char	*ft_create(char *s1, char *s2)
 	while (s2 && s2[++j])
 	{
 		newstr[i++] = s2[j];
-		if (s2[j] == '\n')	
+		if (s2[j] == '\n')
 			break ;
 	}
 	newstr[i] = '\0';
@@ -56,9 +55,9 @@ char	*ft_create(char *s1, char *s2)
 
 void	cleanbuffer(char *buffer, int *flag)
 {
-	int i;
-	int j;
-	
+	int	i;
+	int	j;
+
 	j = 0;
 	i = 0;
 	while (buffer[i])
@@ -73,4 +72,10 @@ void	cleanbuffer(char *buffer, int *flag)
 		buffer[i] = 0;
 		i++;
 	}
+}
+
+void	free_all(char *str)
+{
+	while (*str)
+		*str++ = 0;
 }
