@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaires-b <aaires-b@@student.42.fr>         +#+  +:+       +#+        */
+/*   By: aaires-b <aaires-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 15:03:56 by aaires-b          #+#    #+#             */
-/*   Updated: 2023/09/25 10:11:06 by aaires-b         ###   ########.fr       */
+/*   Updated: 2023/10/05 11:22:25 by aaires-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@ char	*get_next_line(int fd)
 	static char	buffer[BUFFER_SIZE + 1];
 	char		*line;
 	int			flag;
+	int			i;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	i = 0;
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0 || fd >= FOPEN_MAX)
 	{
-		cleanbuffer(buffer, &flag);
+		while (i <= BUFFER_SIZE && fd < FOPEN_MAX && fd >= 0)
+			buffer[i++] = 0;
 		return (NULL);
 	}
 	line = NULL;
@@ -29,12 +32,6 @@ char	*get_next_line(int fd)
 	{
 		line = ft_create(line, buffer);
 		cleanbuffer(buffer, &flag);
-	}
-	if ((read(fd, buffer, 0) < 0))
-	{
-		free_all(buffer);
-		free(line);
-		return (NULL);
 	}
 	return (line);
 }
